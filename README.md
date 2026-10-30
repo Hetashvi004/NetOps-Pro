@@ -62,3 +62,9 @@ python3 scripts/network_inventory.py
 - Log analysis
 - Python REST API monitoring
 - Automated JSON reporting
+
+## Upcoming Features
+
+- CPU monitoring
+- Memory monitoring
+- Disk utilization monitoring
