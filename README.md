@@ -1,8 +1,8 @@
 
 # NetOps-Pro
 
-NetOps-Pro is a Linux network diagnostics and infrastructure
-automation project built using Python, Bash and Linux utilities.
+NetOps-Pro is a Linux server monitoring
+and automation platform.
 
 ## Current Features
 
