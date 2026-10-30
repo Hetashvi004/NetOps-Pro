@@ -1,8 +1,13 @@
 
 # NetOps-Pro
 
+<<<<<<< HEAD
 NetOps-Pro is a Linux infrastructure monitoring	and network automation platform.
 automation project built using Python, Bash and Linux utilities.
+=======
+NetOps-Pro is a Linux server monitoring
+and automation platform.
+>>>>>>> feature/cpu-memory-monitoring
 
 ## Current Features
 
@@ -62,3 +67,9 @@ python3 scripts/network_inventory.py
 - Log analysis
 - Python REST API monitoring
 - Automated JSON reporting
+
+## Upcoming Features
+
+- CPU monitoring
+- Memory monitoring
+- Disk utilization monitoring
