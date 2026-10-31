@@ -73,3 +73,11 @@ python3 scripts/network_inventory.py
 - CPU monitoring
 - Memory monitoring
 - Disk utilization monitoring
+
+## Usage Guide
+### Connectivity Diagnostics
+
+Run:
+
+```bash
+python3 scripts/connectivity_check.py
