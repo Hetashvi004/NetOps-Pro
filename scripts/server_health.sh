@@ -57,4 +57,36 @@ else
 
 fi
 
+echo
+echo "========== SERVICE HEALTH CHECK =========="
+
+# Services to monitor
+SERVICES=("ssh" "docker" "cron" "NetworkManager")
+
+# Function to check service status
+check_service() {
+
+    SERVICE_NAME=$1
+
+    if systemctl is-active --quiet "$SERVICE_NAME"; then
+
+        echo "[RUNNING] $SERVICE_NAME"
+
+    else
+
+        echo "[NOT RUNNING] $SERVICE_NAME"
+
+    fi
+}
+
+# Loop through all services
+for SERVICE in "${SERVICES[@]}"
+do
+
+    check_service "$SERVICE"
+
+done
+
+echo "======================================"
+
 echo "======================================"
