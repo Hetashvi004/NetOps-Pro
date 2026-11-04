@@ -19,6 +19,11 @@ result = subprocess.run(
 
 output = result.stdout
 
+if result.returncode != 0:
+    print("ERROR: Server health script failed")
+    print(result.stderr)
+    raise SystemExit(1)
+
 # Extract CPU usage
 cpu_match = re.search(r"CPU Usage:\s*(\d+)%", output)
 cpu_usage = int(cpu_match.group(1)) if cpu_match else None
