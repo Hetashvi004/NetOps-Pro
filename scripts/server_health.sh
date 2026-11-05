@@ -3,6 +3,112 @@
 # Project configuration
 PROJECT_NAME="NetOps-Pro"
 
+
+# ==========================================
+# COMMAND-LINE ARGUMENT CONFIGURATION
+# ==========================================
+
+# Default disk thresholds
+DISK_WARNING=70
+DISK_CRITICAL=80
+
+# Function to display help
+show_help() {
+
+    echo "======================================"
+    echo "       NetOps-Pro SERVER MONITOR"
+    echo "======================================"
+
+    echo "Usage:"
+    echo "./scripts/server_health.sh [OPTIONS]"
+
+    echo
+    echo "Options:"
+    echo "--disk-warning VALUE    Set warning threshold"
+    echo "--disk-critical VALUE   Set critical threshold"
+    echo "-h, --help              Display help"
+
+    echo
+    echo "Example:"
+    echo "./scripts/server_health.sh --disk-warning 70 --disk-critical 85"
+}
+
+# Process command-line arguments
+while [[ $# -gt 0 ]]; do
+
+    case "$1" in
+
+        --disk-warning)
+
+            if [[ $# -lt 2 ]]; then
+                echo "ERROR: Missing value for --disk-warning"
+                exit 2
+            fi
+
+            DISK_WARNING="$2"
+            shift 2
+            ;;
+
+        --disk-critical)
+
+            if [[ $# -lt 2 ]]; then
+                echo "ERROR: Missing value for --disk-critical"
+                exit 2
+            fi
+
+            DISK_CRITICAL="$2"
+            shift 2
+            ;;
+
+        -h|--help)
+
+            show_help
+            exit 0
+            ;;
+
+        *)
+
+            echo "ERROR: Unknown option: $1"
+            show_help
+            exit 2
+            ;;
+
+    esac
+
+done
+
+# Validate numeric input
+if ! [[ "$DISK_WARNING" =~ ^[0-9]+$ ]] ||
+   ! [[ "$DISK_CRITICAL" =~ ^[0-9]+$ ]]; then
+
+    echo "ERROR: Thresholds must be numeric."
+    exit 2
+
+fi
+
+# Validate threshold range
+if (( DISK_WARNING < 1 || DISK_WARNING > 99 ||
+      DISK_CRITICAL < 2 || DISK_CRITICAL > 100 )); then
+
+    echo "ERROR: Thresholds must be between 1 and 100."
+    exit 2
+
+fi
+
+# Validate threshold relationship
+if (( DISK_WARNING >= DISK_CRITICAL )); then
+
+    echo "ERROR: Critical threshold must exceed warning threshold."
+    exit 2
+
+fi
+
+echo "Disk warning threshold: ${DISK_WARNING}%"
+echo "Disk critical threshold: ${DISK_CRITICAL}%"
+
+echo
+
+
 # Function to calculate CPU utilization
 
 get_cpu_usage() {
@@ -37,11 +143,6 @@ get_cpu_usage() {
 
     echo "$CPU_USAGE"
 }
-
-
-# Monitoring configuration
-DISK_WARNING=70
-DISK_CRITICAL=80
 
 # Collect system information
 HOSTNAME_VALUE=$(hostname)
